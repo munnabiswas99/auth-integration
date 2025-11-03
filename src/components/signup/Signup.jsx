@@ -1,5 +1,7 @@
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import React from "react";
 import { Link } from "react-router";
+import { auth } from "../../firebase.init";
 
 const Signup = () => {
 
@@ -10,6 +12,16 @@ const Signup = () => {
         const password = e.target.password.value;
 
         console.log(name, email, password);
+
+        createUserWithEmailAndPassword(auth, email, password)
+        .then((result) => {
+            const user = result.user;
+            console.log(user);
+        })
+        .catch(error => {
+            const errorMsg = error.message;
+            console.log(errorMsg);
+        })
     }
 
   return (
