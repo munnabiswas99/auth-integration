@@ -1,16 +1,34 @@
-import React from "react";
+import React, { use } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../../contents/AuthContext";
 
 const Login = () => {
+  const {signUp} = use(AuthContext);
+
+  const handleSubmit = (e) =>{
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    signUp(email, password)
+    .then(result => {
+      console.log(result.user)
+    })
+    .catch(error => {
+      console.log(error.message)
+    })
+    
+  } 
+
   return (
     <div className="card bg-base-100 w-full mx-auto mt-20 max-w-sm shrink-0 shadow-2xl">
       <h1 className="text-5xl font-bold ml-5">Login now!</h1>
       <div className="card-body">
-        <form className="fieldset">
+        <form className="fieldset" onSubmit={handleSubmit}>
           <label className="label">Email</label>
-          <input type="email" className="input" placeholder="Email" />
+          <input type="email" name='email' className="input" placeholder="Email" />
           <label className="label">Password</label>
-          <input type="password" className="input" placeholder="Password" />
+          <input type="password" name='password' className="input" placeholder="Password" />
           <div>
             <a className="link link-hover">Forgot password?</a>
           </div>
