@@ -1,7 +1,7 @@
 import React from 'react';
 import { AuthContext } from './AuthContext';
 import { auth } from '../firebase.init';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
 
 const AuthProvider = ({children}) => {
 
@@ -17,6 +17,15 @@ const AuthProvider = ({children}) => {
         createUser,
         signUp
     }
+
+    onAuthStateChanged(auth, (currentUser) => {
+        if(currentUser){
+            console.log('has current user', currentUser);
+        }
+        else{
+            console.log('current user', currentUser)
+        }
+    })
 
     return (
         <AuthContext value={userInfo}>
